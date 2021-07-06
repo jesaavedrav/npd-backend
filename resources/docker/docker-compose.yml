@@ -25,7 +25,7 @@ services:
     restart: always
     image: quay.io/keycloak/keycloak:latest
     command:
-      - "-b 0.0.0.0"
+      - "-b 0.0.0.0 -Dkeycloak.import=/opt/jboss/keycloak/imports/npd-realm-export.json -Dkeycloak.migration.strategy=IGNORE_EXISTING"
     environment:
       DB_VENDOR: POSTGRES
       DB_ADDR: keycloak_db
@@ -39,5 +39,9 @@ services:
       #JDBC_PARAMS: "ssl=true"
     ports:
       - 18080:8080
+    volumes:
+      - type: bind
+        source: ./keycloak-files/npd-realm-export.json
+        target: /opt/jboss/keycloak/imports/npd-realm-export.json
     depends_on:
       - keycloak_db
