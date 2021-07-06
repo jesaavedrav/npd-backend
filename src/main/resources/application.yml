@@ -1,0 +1,25 @@
+#Application Configuration
+server:
+  port: 8091
+  error:
+    include-message: always
+
+#Keycloack configurations
+keycloak:
+  auth-server-url: http://localhost:18080/auth
+  realm: npd
+  resource: npd-backend
+  public-client: true
+  security-constraints[0]:
+    authRoles[0]: administrator
+    securityCollections[0]:
+      patterns[0]: /admin/*
+
+#Logging configuration
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+#  level:
+#    org:
+#      springframework:
+#        security: DEBUG
